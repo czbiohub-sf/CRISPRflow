@@ -9,7 +9,7 @@ git clone https://github.com/czbiohub/CRISPRflow.git
 ```
 Go the repository directory, switch he branch if running branch other than master
 ```
-cd GenoPrimer
+cd CRISPRflow
 git checkout <branch you'd like to run>
 ```
 Create conda environment and activated it
