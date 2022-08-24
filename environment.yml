@@ -1,0 +1,48 @@
+name: CRISPRflow
+channels:
+  - conda-forge
+  - bioconda
+  - default
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=1_gnu
+  - bzip2=1.0.8
+  - ca-certificates=2021.10.8
+  - et_xmlfile=1.0.1
+  - ld_impl_linux-64=2.36.1
+  - libblas=3.9.0
+  - libcblas=3.9.0
+  - libffi=3.4.2
+  - libgcc-ng=11.2.0
+  - libgfortran-ng=11.2.0
+  - libgfortran5=11.2.0
+  - libgomp=11.2.0
+  - liblapack=3.9.0
+  - libnsl=2.0.0
+  - libopenblas=0.3.18
+  - libstdcxx-ng=11.2.0
+  - libuuid=2.32.1
+  - libzlib=1.2.11
+  - ncurses=6.3
+  - numpy=1.22.2
+  - openssl=3.0.2
+  - pandas=1.4.1
+  - python=3.10.2
+  - python_abi=3.10
+  - readline=8.1
+  - setuptools=60.9.3
+  - sqlite=3.37.0
+  - tk=8.6.12
+  - tzdata=2021e
+  - xz=5.2.5
+  - zlib=1.2.11
+  - pip:
+    - et-xmlfile==1.0.1
+    - openpyxl==3.0.9
+    - pip==22.0.3
+    - python-dateutil==2.8.2
+    - pytz==2021.3
+    - six==1.16.0
+    - wheel==0.37.1
+prefix: /home/duo.peng/miniconda3/envs/CRISPRflow

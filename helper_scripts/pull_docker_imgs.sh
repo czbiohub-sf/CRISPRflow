@@ -1,0 +1,9 @@
+docker pull quay.io/fhcrc-microbiome/python-pandas:v1.2.1_latest
+docker pull quay.io/biocontainers/fastqc:0.11.9--hdfd78af_1
+docker pull quay.io/biocontainers/multiqc:1.11--pyhdfd78af_0
+docker pull quay.io/biocontainers/cutadapt:3.4--py37h73a75cf_1
+docker pull quay.io/biocontainers/mageck:0.5.9.4--py38h8c62d01_1
+#docker pull quay.io/biocontainers/mageck:0.5.9.5--py38h4a32c8e_1
+docker pull quay.io/biocontainers/bioconductor-mageckflute:1.12.0--r41hdfd78af_0
+docker pull quay.io/biocontainers/mageck-vispr:0.5.6--py_0
+docker pull rocker/r-rmd:latest
