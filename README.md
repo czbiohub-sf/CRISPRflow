@@ -19,7 +19,7 @@ Create conda environment
 ```
 Pull docker images
 ```
-bash 
+bash pull_docker_imgs.sh
 ```
 
 More to be added
