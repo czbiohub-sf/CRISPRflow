@@ -1,0 +1,1 @@
+for screening using only one sublibrary (e.g. only Library A used), _A_ and _B_ should be avoided in the names of fastq and library-ref files
