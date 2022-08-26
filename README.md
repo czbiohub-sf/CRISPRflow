@@ -23,16 +23,13 @@ conda activate CRISPRflow
 ```
 Pull docker images
 ```
-cd helper_scripts
-bash pull_docker_imgs.sh
+bash helper_scripts/pull_docker_imgs.sh
 ```
 Check fastq files and create nextflow commands
 ```
-#in directory helper_scripts
-python check_files_and_get_nf_cmds.py --csv example_LibA.csv
+python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibA.csv
 ```
 Start nextflow
 ```
-cd .. # in directory CRISPRflow
 bash example_LibA.csv.sh
 ```
