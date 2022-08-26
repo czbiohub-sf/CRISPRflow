@@ -39,3 +39,11 @@ Start nextflow
 ```
 bash example_LibA.csv.sh
 ```
+
+## Troubleshooting
+Java issues (after installing java):  
+For most case, it can be fixed by specifying the version installed (17 in the example)
+```
+unset JAVA_HOME
+export JAVA_HOME=`/usr/libexec/java_home -v 17`
+```
