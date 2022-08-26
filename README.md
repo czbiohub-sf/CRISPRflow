@@ -2,6 +2,10 @@
 ### MAGeCK analysis automated by Nextflow
 ### modified based on https://github.com/FredHutch/crispr-screen-nf
 
+## Dependencies
+- [Docker](https://docs.docker.com/get-docker/)
+- [Java 11 (or later, up to 18)](https://www.oracle.com/java/technologies/downloads/)
+
 ## Usage: 
 clone the repository
 ```
