@@ -13,12 +13,12 @@ clone the repository
 ```
 git clone https://github.com/czbiohub/CRISPRflow.git
 ```
-Go the repository directory, switch he branch if running branch other than master
+Go the repository directory, switch the branch if running branch other than master
 ```
 cd CRISPRflow
 git checkout <branch you'd like to run>
 ```
-Create conda environment and activated it
+Create conda environment and activate it
 ```
 conda env create -f environment.yml
 conda activate CRISPRflow
@@ -31,7 +31,7 @@ Check fastq files and create nextflow commands
 ```
 python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibA.csv
 ```
-Make the nextflow command excutable
+Make the nextflow command executable
 ```
 chmod a+x nextflow
 ```
