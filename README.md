@@ -5,6 +5,8 @@
 ## Dependencies
 - [Docker](https://docs.docker.com/get-docker/)
 - [Java 11 (or later, up to 17)](https://www.oracle.com/java/technologies/downloads/)
+- [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 ## Usage: 
 clone the repository
