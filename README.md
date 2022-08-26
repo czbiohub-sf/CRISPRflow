@@ -34,5 +34,5 @@ python check_files_and_get_nf_cmds.py --csv example_LibA.csv
 Start nextflow
 ```
 cd .. # in directory CRISPRflow
-bash example_LibA.csv
+bash example_LibA.csv.sh
 ```
