@@ -5,8 +5,7 @@ channels:
   - default
   - defaults
 dependencies:
-  - _libgcc_mutex=0.1=conda_forge
-  - _openmp_mutex=4.5=1_gnu
+
   - bzip2=1.0.8
   - ca-certificates=2021.10.8
   - et_xmlfile=1.0.1
@@ -14,14 +13,9 @@ dependencies:
   - libblas=3.9.0
   - libcblas=3.9.0
   - libffi=3.4.2
-  - libgcc-ng=11.2.0
-  - libgfortran-ng=11.2.0
   - libgfortran5=11.2.0
-  - libgomp=11.2.0
   - liblapack=3.9.0
-  - libnsl=2.0.0
   - libopenblas=0.3.18
-  - libstdcxx-ng=11.2.0
   - libuuid=2.32.1
   - libzlib=1.2.11
   - ncurses=6.3
@@ -37,6 +31,7 @@ dependencies:
   - tzdata=2021e
   - xz=5.2.5
   - zlib=1.2.11
+  - pip
   - pip:
     - et-xmlfile==1.0.1
     - openpyxl==3.0.9
