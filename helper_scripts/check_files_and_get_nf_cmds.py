@@ -221,8 +221,11 @@ def main():
                                 '--output mageck_out --output_prefix ${prefix} -profile testing\n'
                             )
             print(f"wrote nf commands to file: {csv}.sh")
-            print(f"moving {csv}.sh to the parent folder (of directory \"helper_scripts\")")
-            os.rename(f"{csv}.sh",f"../{csv}.sh")
+            print(f"moving {csv}.sh from metadata folder to the parent folder")
+            csv_filename = os.path.basename(f"{csv}.sh")
+
+
+            os.rename(f"{csv}.sh",f"{csv_filename}")
 
 
 
