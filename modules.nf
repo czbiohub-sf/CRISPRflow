@@ -1,7 +1,6 @@
 // Container used to run mageck
 mageck_container = "quay.io/biocontainers/mageck:0.5.9.4--py38h8c62d01_1"
 mageckflute_container = "quay.io/biocontainers/bioconductor-mageckflute:1.12.0--r41hdfd78af_0"
-
 //
 
 
