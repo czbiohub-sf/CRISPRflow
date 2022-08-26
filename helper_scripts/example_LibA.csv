@@ -1,0 +1,2 @@
+﻿Parent_dir,Lib_A_dir,Lib_B_dir,Lib_A_csv,Lib_B_csv,prefix,suffix_tr,suffix_ctrl,Lib_A_tr_bio_reps,Lib_B_tr_bio_reps,Lib_A_ctrl_bio_reps,Lib_B_ctrl_bio_reps
+/mnt/ibm_lg/duo.peng/fastq_from_SRA,Han_influenzaA,,GeCKOA_Mageck_ref.csv,,Han_InfluenzaA_,_Infected.downsize.fastq.gz,_Control.downsize.fastq.gz,LibArep1,,LibArep1,
