@@ -29,6 +29,10 @@ Check fastq files and create nextflow commands
 ```
 python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibA.csv
 ```
+Make the nextflow command excutable
+```
+chmod a+x nextflow
+```
 Start nextflow
 ```
 bash example_LibA.csv.sh
