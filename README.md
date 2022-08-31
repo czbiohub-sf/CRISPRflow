@@ -2,14 +2,14 @@
 ### MAGeCK analysis automated by Nextflow
 ### modified based on https://github.com/FredHutch/crispr-screen-nf
 
+## System requirements
+Linux or MacOS
+
 ## Dependencies
 - [Docker](https://docs.docker.com/get-docker/)
 - [Java 11 (or later, up to 17)](https://www.oracle.com/java/technologies/downloads/)
 - [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-
-## System requirements
-Linux or MacOS
 
 ## Usage: 
 clone the repository
