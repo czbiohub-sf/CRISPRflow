@@ -42,6 +42,49 @@ bash example_LibA.csv.sh #example 1
 bash example_LibAB.csv.sh #example 2
 ```
 
+## Fastq files: naming and path
+naming and path of fastq files are defined in csv files using the following fields. Each experiment take one row
+
+- **prefix**: for all fastq file in the same experiment  
+`example: Han_Influenza_`
+- **suffix_tr**: suffix for treatment    
+`example: _Infected.fastq.gz`  
+- **Lib_A_tr_bio_reps**: Biological replicates  
+`example: LibArep1,LibArep2`  
+
+The above define the following two files:  
+`Han_Influenza_LibArep1_Infected.fastq.gz`  
+`Han_Influenza_LibArep2_Infected.fastq.gz`
+
+- **suffix_ctrl**: suffix for conrol    
+`example: _Control.fastq.gz`  
+- **Lib_A_ctrl_bio_reps**: Biological replicates  
+`example: LibArep1,LibArep2`  
+
+The above define the following two files:  
+`Han_Influenza_LibArep1_Control.fastq.gz`  
+`Han_Influenza_LibArep2_Control.fastq.gz`
+
+- **Parent_dir**: the parent folder of Lib_A_dir and Lib_A_dir.
+- **Lib_A_dir**: the folder containing fastq files from Lib_A or single library experiments  
+`example: Parent_dir/Han_influenzaA`  
+The script will check accessbility of the following files:  
+`Parent_dir/Han_influenzaA/Han_Influenza_LibArep1_Infected.fastq.gz`   
+`Parent_dir/Han_influenzaA/Han_Influenza_LibArep2_Infected.fastq.gz`  
+`Parent_dir/Han_influenzaA/Han_Influenza_LibArep1_Control.fastq.gz`    
+`Parent_dir/Han_influenzaA/Han_Influenza_LibArep2_Control.fastq.gz`  
+
+For split libraries (A/B), fill in these columns
+- Lib_B_tr_bio_reps  
+- Lib_B_ctrl_bio_reps
+- Lib_B_dir
+
+## Library reference files
+Library reference files should live in the **Lib_A_dir** and **Lib_B_dir**.  
+And the file name should be specificed under columns **Lib_A_csv** and **Lib_B_csv**
+For example `GeCKOA_Mageck_ref.csv` `GeCKOB_Mageck_ref.csv` 
+For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/
+
 ## Troubleshooting
 Java issues (after installing java):  
 For most case, it can be fixed by explicitly specifying the version installed (v17 in the example)
