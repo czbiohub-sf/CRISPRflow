@@ -29,8 +29,8 @@ bash helper_scripts/pull_docker_imgs.sh
 ```
 Check fastq files and create nextflow commands
 ```
-python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibA.csv #example 1
-python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibAB.csv #example 2
+python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibA.csv #example 1: No sublibraries
+python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibAB.csv #example 2: A/B sublibraries
 ```
 Make the nextflow command executable
 ```
@@ -38,8 +38,8 @@ chmod a+x nextflow
 ```
 Start nextflow
 ```
-bash example_LibA.csv.sh #example 1
-bash example_LibAB.csv.sh #example 2
+bash example_LibA.csv.sh #example 1: No sublibraries
+bash example_LibAB.csv.sh #example 2: A/B sublibraries
 ```
 ## Input
 - Fastq files
