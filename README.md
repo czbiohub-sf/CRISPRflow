@@ -45,20 +45,25 @@ bash example_LibAB.csv.sh #example 2
 ## Fastq files: naming and path
 naming and path of fastq files are defined in csv files using the following fields. Each experiment take one row
 
-- **prefix**: for all fastq file in the same experiment  
-`example: Han_Influenza_`
-- **suffix_tr**: suffix for treatment    
-`example: _Infected.fastq.gz`  
-- **Lib_A_tr_bio_reps**: Biological replicates  
-`example: LibArep1,LibArep2`  
-- **suffix_ctrl**: suffix for conrol    
-`example: _Control.fastq.gz`  
-- **Lib_A_ctrl_bio_reps**: Biological replicates  
-`example: LibArep1,LibArep2`  
-- **Parent_dir**: the parent folder of Lib_A_dir and Lib_A_dir.
-`example: mydata`  
-- **Lib_A_dir**: the folder containing fastq files from Lib_A or single library experiments  
-`example: Han_influenzaA`  
+- Directories
+  - **Parent_dir**: the parent folder of Lib_A_dir and Lib_A_dir  
+    `example: mydata`  
+  - **Lib_A_dir**: the folder containing fastq files from Lib_A or single library experiments  
+    `example: Han_influenzaA` 
+- File name parts
+  - **prefix**: for all fastq file in the same experiment  
+    `example: Han_Influenza_`
+    - treatment
+      - **Lib_A_tr_bio_reps**: Biological replicates  
+        `example: LibArep1,LibArep2`  
+      - **suffix_tr**: suffix for treatment    
+        `example: _Infected.fastq.gz`  
+    - control
+      - **Lib_A_ctrl_bio_reps**: Biological replicates  
+        `example: LibArep1,LibArep2`  
+      - **suffix_ctrl**: suffix for conrol    
+        `example: _Control.fastq.gz` 
+ 
 The script will check accessbility of the following files:  
 `mydata/Han_influenzaA/Han_Influenza_LibArep1_Infected.fastq.gz`   
 `mydata/Han_influenzaA/Han_Influenza_LibArep2_Infected.fastq.gz`  
