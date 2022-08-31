@@ -70,10 +70,13 @@ The script will check accessbility of the following files:
 `mydata/Han_influenzaA/Han_Influenza_LibArep1_Control.fastq.gz`    
 `mydata/Han_influenzaA/Han_Influenza_LibArep2_Control.fastq.gz`  
 
-For split libraries (A/B), The following columns are needed. For an example, see metadata/librar 
+For split libraries (A/B), The following columns are needed.
 - Lib_B_tr_bio_reps  
 - Lib_B_ctrl_bio_reps
-- Lib_B_dir
+- Lib_B_dir  
+
+**Note**: names associated with Library A needs to have "\_A\_" in the naming and Library B need to have "\_B\_"  
+For an example, see `metadata/example_LibAB.csv`
 
 ## Library reference files
 Library reference files should live in the **Lib_A_dir** and **Lib_B_dir**.   
