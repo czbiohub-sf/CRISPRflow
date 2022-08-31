@@ -43,8 +43,8 @@ bash example_LibAB.csv.sh #example 2
 ```
 ## Input
 - Fastq files
-- a csv file specifying fastq path for each condition/replication/sublibrary  
-- a reference library csv file for each (sub)library  
+- A csv file that maps fastq files to each condition/replication/sublibrary  
+- A reference library csv file for each (sub)library  
 
 ## Fastq files: naming and path
 naming and path of fastq files are defined in csv files using the following fields. Each experiment take one row
