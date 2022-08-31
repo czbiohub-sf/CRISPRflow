@@ -8,6 +8,9 @@
 - [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
+## System requirements
+Linux or MacOS
+
 ## Usage: 
 clone the repository
 ```
