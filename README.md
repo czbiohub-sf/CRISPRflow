@@ -81,8 +81,8 @@ For an example, see `metadata/example_LibAB.csv`
 ## Library reference files
 Library reference files should live in the **Lib_A_dir** and **Lib_B_dir**.   
 And the file (usually csv files) names should be specificed in the csv file under columns **Lib_A_csv** and **Lib_B_csv**  
-For example `GeCKOA_Mageck_ref.csv` `GeCKOB_Mageck_ref.csv` 
-For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/
+For example `GeCKOA_Mageck_ref.csv` `GeCKOB_Mageck_ref.csv`  
+For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/  
 
 ## Troubleshooting
 Java issues (after installing java):  
