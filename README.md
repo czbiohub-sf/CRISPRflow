@@ -80,8 +80,8 @@ For split libraries (A/B), fill in these columns
 - Lib_B_dir
 
 ## Library reference files
-Library reference files should live in the **Lib_A_dir** and **Lib_B_dir**.  
-And the file name should be specificed under columns **Lib_A_csv** and **Lib_B_csv**
+Library reference files should live in the **Lib_A_dir** and **Lib_B_dir**.   
+And the file name should be specificed under columns **Lib_A_csv** and **Lib_B_csv**  
 For example `GeCKOA_Mageck_ref.csv` `GeCKOB_Mageck_ref.csv` 
 For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/
 
