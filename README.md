@@ -25,7 +25,8 @@ conda activate CRISPRflow
 ```
 Pull docker images
 ```
-bash helper_scripts/pull_docker_imgs.sh
+bash helper_scripts/pull_docker_imgs.sh #MacOS & Linux
+bash helper_scripts/pull_docker_imgs.bat #windows
 ```
 Check fastq files and create nextflow commands
 ```
