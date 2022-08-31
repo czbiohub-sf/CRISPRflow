@@ -53,26 +53,26 @@ naming and path of fastq files are defined in csv files using the following fiel
   - **Parent_dir**: the parent folder of Lib_A_dir and Lib_A_dir  
     `example: mydata`  
   - **Lib_A_dir**: the folder containing fastq files from Lib_A or single library experiments  
-    `example: Han_influenzaA` 
+    `example: Han_influenza` 
 - File name parts
   - **prefix**: for all fastq file in the same experiment  
     `example: Han_Influenza_`
     - treatment
       - **Lib_A_tr_bio_reps**: Biological replicates  
-        `example: LibArep1,LibArep2`  
+        `example: rep1,rep2`  
       - **suffix_tr**: suffix for treatment    
         `example: _Infected.fastq.gz`  
     - control
       - **Lib_A_ctrl_bio_reps**: Biological replicates  
-        `example: LibArep1,LibArep2`  
+        `example: rep1,rep2`  
       - **suffix_ctrl**: suffix for conrol    
         `example: _Control.fastq.gz` 
  
 The script will check accessbility of the following files:  
-`mydata/Han_influenzaA/Han_Influenza_LibArep1_Infected.fastq.gz`   
-`mydata/Han_influenzaA/Han_Influenza_LibArep2_Infected.fastq.gz`  
-`mydata/Han_influenzaA/Han_Influenza_LibArep1_Control.fastq.gz`    
-`mydata/Han_influenzaA/Han_Influenza_LibArep2_Control.fastq.gz`  
+`mydata/Han_influenza/Han_Influenza_rep1_Infected.fastq.gz`   
+`mydata/Han_influenza/Han_Influenza_rep2_Infected.fastq.gz`  
+`mydata/Han_influenza/Han_Influenza_rep1_Control.fastq.gz`    
+`mydata/Han_influenza/Han_Influenza_rep2_Control.fastq.gz`  
 
 For split libraries (A/B), The following columns are needed.
 - Lib_B_tr_bio_reps  
