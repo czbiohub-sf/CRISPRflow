@@ -63,7 +63,8 @@ naming and path of fastq files are defined in csv files using the following fiel
     `example: Han_influenza` 
 - File name parts
   - **prefix**: for all fastq file in the same experiment  
-    `example: Han_Influenza_`
+    `example: Han_Influenza_`  
+    IMPORTANT: prefix needs to be unique, it will be used to name the output folder in "MAGECK_out"
     - treatment
       - **Lib_A_tr_bio_reps**: Biological replicates  
         `example: rep1,rep2`  
