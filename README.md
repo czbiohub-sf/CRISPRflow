@@ -59,7 +59,7 @@ You should see the following output:
 - Fastq files
 - A reference library file for each (sub)library
 - A xlsx file that contains metadata and design of the analysis (example file: `metadata/Naming_convention_example.xlsx`)  
-  The metadata xlsx file will automatically generate path + names for the fastq.gz files, please make sure to move and rename your files
+  The metadata xlsx file will automatically generate path + names for the fastq.gz files, please make sure to move and rename your fastq.gz files accordingly
   
 ## Library reference files
 For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/  
