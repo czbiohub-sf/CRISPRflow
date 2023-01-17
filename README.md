@@ -12,6 +12,8 @@ Linux or MacOS
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 ## Usage: 
+
+### One-time preparation work
 clone the repository
 ```
 git clone https://github.com/czbiohub/CRISPRflow.git
@@ -30,70 +32,34 @@ Pull docker images
 ```
 bash helper_scripts/pull_docker_imgs.sh 
 ```
-Check fastq files and create nextflow commands
-```
-#example 1: No sublibraries
-python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibA.csv
-#example 2: A/B sublibraries
-python helper_scripts/check_files_and_get_nf_cmds.py --csv metadata/example_LibAB.csv 
-```
 Make the nextflow command executable
 ```
 chmod a+x nextflow
+```  
+  
+### Process your fastq.gz files 
+Check fastq files and create nextflow commands
 ```
-Start nextflow
+conda activate CRISPRflow
+python helper_scripts/check_files_and_get_nf_cmds.py --xlsx metadata/Naming_convention_example.xlsx
 ```
-#example 1: No sublibraries
-bash example_LibA.csv.sh
-#example 2: A/B sublibraries
-bash example_LibAB.csv.sh 
+You should see the following output:
+![image](https://user-images.githubusercontent.com/4129442/213024350-f88a960b-3cfa-4601-acf8-3b51ffe9cfad.png)
+Start nextflow  
 ```
+bash Naming_convention_example.xlsx.sh
+```
+You should see the following output:
+![image](https://user-images.githubusercontent.com/4129442/213024291-3322c1b3-a8cf-4a02-bbce-5b286aa5124f.png)
+
+
 ## Input
 - Fastq files
-- A csv file that maps fastq files to each condition/replication/sublibrary  
-- A reference library csv file for each (sub)library  
-
-## Fastq files: naming and path
-naming and path of fastq files are defined in csv files using the following fields. Each experiment take one row
-
-- Directories
-  - **Parent_dir**: the parent folder of Lib_A_dir and Lib_A_dir  
-    `example: mydata`  
-  - **Lib_A_dir**: the folder containing fastq files from Lib_A or single library experiments  
-    `example: Han_influenza` 
-- File name parts
-  - **prefix**: for all fastq file in the same experiment  
-    `example: Han_Influenza_`  
-    IMPORTANT: prefix needs to be unique, it will be used to name the output folder in "MAGECK_out"
-    - treatment
-      - **Lib_A_tr_bio_reps**: Biological replicates  
-        `example: rep1,rep2`  
-      - **suffix_tr**: suffix for treatment    
-        `example: _Infected.fastq.gz`  
-    - control
-      - **Lib_A_ctrl_bio_reps**: Biological replicates  
-        `example: rep1,rep2`  
-      - **suffix_ctrl**: suffix for conrol    
-        `example: _Control.fastq.gz` 
- 
-The script will check accessbility of the following files:  
-`mydata/Han_influenza/Han_Influenza_rep1_Infected.fastq.gz`   
-`mydata/Han_influenza/Han_Influenza_rep2_Infected.fastq.gz`  
-`mydata/Han_influenza/Han_Influenza_rep1_Control.fastq.gz`    
-`mydata/Han_influenza/Han_Influenza_rep2_Control.fastq.gz`  
-
-For split libraries (A/B), The following columns are needed.
-- Lib_B_tr_bio_reps  
-- Lib_B_ctrl_bio_reps
-- Lib_B_dir  
-
-**Note**: names associated with Library A needs to have "\_A\_" in the naming and Library B need to have "\_B\_"  
-For an example, see `metadata/example_LibAB.csv`
-
+- A reference library file for each (sub)library
+- A xlsx file that contains metadata and design of the analysis (example file: `metadata/Naming_convention_example.xlsx`)  
+  The metadata xlsx file will automatically generate path + names for the fastq.gz files, please make sure to move and rename your files
+  
 ## Library reference files
-Library reference files should live in the **Lib_A_dir** and **Lib_B_dir**.   
-And the file (usually csv files) names should be specificed in the csv file under columns **Lib_A_csv** and **Lib_B_csv**  
-For example `GeCKOA_Mageck_ref.csv` `GeCKOB_Mageck_ref.csv`  
 For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/  
 
 ## Troubleshooting
