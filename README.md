@@ -34,7 +34,7 @@ bash helper_scripts/pull_docker_imgs.sh
 ```
 Make the nextflow command executable
 ```
-chmod a+x nextflow
+chmod a+x ./nextflow
 ```  
   
 ### Process your fastq.gz files 
@@ -43,13 +43,15 @@ Check fastq files and create nextflow commands
 conda activate CRISPRflow
 python helper_scripts/check_files_and_get_nf_cmds.py --xlsx metadata/Naming_convention_example.xlsx
 ```
-You should see the following output:
+You should see the following output:  
+
 ![image](https://user-images.githubusercontent.com/4129442/213024350-f88a960b-3cfa-4601-acf8-3b51ffe9cfad.png)
 Start nextflow  
 ```
 bash Naming_convention_example.xlsx.sh
 ```
-You should see the following output:
+You should see the following output:  
+
 ![image](https://user-images.githubusercontent.com/4129442/213024291-3322c1b3-a8cf-4a02-bbce-5b286aa5124f.png)
 
 
@@ -57,7 +59,7 @@ You should see the following output:
 - Fastq files
 - A reference library file for each (sub)library
 - A xlsx file that contains metadata and design of the analysis (example file: `metadata/Naming_convention_example.xlsx`)  
-  The metadata xlsx file will automatically generate path + names for the fastq.gz files, please make sure to move and rename your files
+  The metadata xlsx file will automatically generate path + names for the fastq.gz files, please make sure to move and rename your fastq.gz files accordingly
   
 ## Library reference files
 For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/  
