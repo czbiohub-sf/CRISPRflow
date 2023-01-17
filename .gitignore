@@ -3,3 +3,5 @@
 *.log
 /.nextflow
 /work
+/fastq/downsize_fastqgz.py
+Naming_convention_example.xlsx.sh
