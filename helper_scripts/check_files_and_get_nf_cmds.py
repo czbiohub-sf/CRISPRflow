@@ -14,7 +14,7 @@ class MyParser(argparse.ArgumentParser):
 
 def parse_args():
     parser = MyParser(description='This script checks the files specified in the excel file')
-    parser.add_argument('--csv', default="", type=str, help='path to the csv file', metavar = '')
+    parser.add_argument('--xlsx', default="", type=str, help='path to the xlsx file', metavar = '')
     config = parser.parse_args()
     if len(sys.argv) == 1:  # print help message if arguments are not valid
         parser.print_help()
@@ -23,7 +23,7 @@ def parse_args():
 
 
 config = vars(parse_args())
-csv = config['csv']
+xlsx = config['xlsx']
 
 class bcolors:
     HEADER = '\033[95m'
@@ -41,199 +41,154 @@ class bcolors:
 #####################
 def main():
     try:
-        print("begin checking files")
+        print("Begin checking files")
         red_flag = False
-        df = pd.read_csv(config['csv'])
-        with open(f"{csv}.sh", "w") as wfh:
-            for index, row in df.iterrows():
-                Parent_dir=row['Parent_dir']
-                Lib_A_dir=row['Lib_A_dir']
-                Lib_B_dir=row['Lib_B_dir']
-                Lib_A_csv=row['Lib_A_csv']
-                Lib_B_csv=row['Lib_B_csv']
-                prefix=row['prefix']
-                suffix_tr=row['suffix_tr']
-                suffix_ctrl=row['suffix_ctrl']
 
-                #check library files
-                if not pd.isnull(row['Lib_A_csv']):
-                    path = os.path.join(Parent_dir,Lib_A_dir,Lib_A_csv)
-                    if not os.path.isfile(path):
-                        print(f"{path} {bcolors.FAIL}not found{bcolors.ENDC}")
-                        red_flag = True
-                    else:
-                        print(f"{path} {bcolors.OKGREEN}OK{bcolors.ENDC}")
+        #check input file path
+        if not os.path.isfile(xlsx):
+            sys.exit(f"Error: could not file file {xlsx}")
 
-                if not pd.isnull(row['Lib_B_csv']):
-                    path = os.path.join(Parent_dir,Lib_B_dir,Lib_B_csv)
-                    if not os.path.isfile(path):
-                        print(f"{path} {bcolors.FAIL}not found{bcolors.ENDC}")
-                        red_flag = True
-                    else:
-                        print(f"{path} {bcolors.OKGREEN}OK{bcolors.ENDC}")          
-                #check fastq files    
-                #treatment            
-                if not pd.isnull(row["Lib_A_tr_bio_reps"]):
-                    A_tr_bio_reps = row["Lib_A_tr_bio_reps"].split(",")
-                    for rep in A_tr_bio_reps:
-                        path = os.path.join(Parent_dir,Lib_A_dir, f"{prefix}{rep}{suffix_tr}")
-                        if not os.path.isfile(path):
-                            print(f"{path} {bcolors.FAIL}not found{bcolors.ENDC}")
-                            red_flag = True
-                        else:
-                            print(f"{path} {bcolors.OKGREEN}OK{bcolors.ENDC}")
-                #treatment
-                if not pd.isnull(row["Lib_B_tr_bio_reps"]):
-                    B_tr_bio_reps = row["Lib_B_tr_bio_reps"].split(",")
-                    for rep in B_tr_bio_reps:
-                        path = os.path.join(Parent_dir,Lib_B_dir, f"{prefix}{rep}{suffix_tr}")
-                        if not os.path.isfile(path):
-                            print(f"{path} {bcolors.FAIL}not found{bcolors.ENDC}")
-                            red_flag = True
-                        else:
-                            print(f"{path} {bcolors.OKGREEN}OK{bcolors.ENDC}")                  
-                #ctrl
-                if not pd.isnull(row["Lib_A_ctrl_bio_reps"]):
-                    A_ctrl_bio_reps = row["Lib_A_ctrl_bio_reps"].split(",")
-                    for rep in A_ctrl_bio_reps:
-                        path = os.path.join(Parent_dir,Lib_A_dir, f"{prefix}{rep}{suffix_ctrl}")
-                        if not os.path.isfile(path):
-                            print(f"{path} {bcolors.FAIL}not found{bcolors.ENDC}")
-                            red_flag = True
-                        else:
-                            print(f"{path} {bcolors.OKGREEN}OK{bcolors.ENDC}")                      
-                #ctrl
-                if not pd.isnull(row["Lib_B_ctrl_bio_reps"]):
-                    B_ctrl_bio_reps = row["Lib_B_ctrl_bio_reps"].split(",")
-                    for rep in B_ctrl_bio_reps:
-                        path = os.path.join(Parent_dir,Lib_B_dir, f"{prefix}{rep}{suffix_ctrl}")
-                        if not os.path.isfile(path):
-                            print(f"{path} {bcolors.FAIL}not found{bcolors.ENDC}")
-                            red_flag = True
-                        else:
-                            print(f"{path} {bcolors.OKGREEN}OK{bcolors.ENDC}")              
-            
-        print("done checking files")
-        if red_flag == True:
-            print(f"failed file check, please make sure all files are accessible and rerun this script")
+        #load spreadsheets
+        try:
+            df_info = pd.read_excel(xlsx, engine="openpyxl", sheet_name="Analysis_info")
+        except:
+            sys.exit("Error while reading sheet: Analysis_info")
+
+        try:
+            df_paths = pd.read_excel(xlsx, engine="openpyxl", sheet_name="File_paths")
+        except:
+            sys.exit("Error while reading sheet: Analysis_info")
+
+        #check spreadsheets
+        if df_info.shape[0] <= 5:
+            sys.exit("Error: not enough rows in sheet: Analysis_info")
+        if df_info.shape[1] <= 10:
+            sys.exit("Error: not enough columns in sheet: Analysis_info")
+        if df_paths.shape[0] <= 4:
+            sys.exit("Error: not enough rows in sheet: File_paths")
+
+        #check fastq files
+        filepath_list = []
+        for index, row in df_paths.iterrows():
+            if index >= 3:
+                filepath = row.iloc[0]
+                filepath_list.append(filepath)
+                if not os.path.isfile(filepath):
+                    print(f"  {filepath} {bcolors.FAIL}not found{bcolors.ENDC}")
+                    red_flag = True
+                else:
+                    print(f"  {filepath} {bcolors.OKGREEN}OK{bcolors.ENDC}")
+
+        print("Done checking files")
+
+        ################
+        #parse metadata#
+        ################
+        print("Parsing metadata and generating commands for Nextflow")
+        wfh = open(f"{xlsx}.sh", "w")
+
+        #contrast
+        contrast = df_info.iloc[0,1]
+        fields = contrast.split(" vs ")
+        if len(fields) < 2:
+            sys.exit("Error parsing the contrast, make sure it's written as 'treatment vs control', single space only")
+        tr = fields[0].strip()
+        ctrl = fields[1].strip()
+        #check if constrast is found in the table
+        contrast_col = list(df_info.iloc[:,4])
+        if tr in contrast_col and ctrl in contrast_col:
+            pass
         else:
-            print(f"passed file check, generating Nextflow commands...")
-            df = pd.read_csv(config['csv'])
-            with open(f"{csv}.sh", "w") as wfh:
-                for index, row in df.iterrows():
-                    # wfh.write("declare -a Lib_A=(")
-                    # reps = " ".join(['"' + item + '"' for item in reps])
-                    # wfh.write(f"{reps})\n")
-                    if not pd.isnull(row["Lib_A_tr_bio_reps"]):
-                        wfh.write('\n#########')
-                        wfh.write(f" {row['prefix']} ")
-                        wfh.write('#########\n')
-                        wfh.write(f"Lib_A_dir={row['Parent_dir']}/{row['Lib_A_dir']}/\n")
-                        wfh.write(f"Lib_B_dir={row['Parent_dir']}/{row['Lib_B_dir']}/\n")
-                        wfh.write(f"Lib_A_csv={row['Lib_A_csv']}\n")
-                        wfh.write(f"Lib_B_csv={row['Lib_B_csv']}\n")
-                        wfh.write(f"prefix={row['prefix']}\n")
-                        wfh.write(f"suffix_tr={row['suffix_tr']}\n")
-                        wfh.write(f"suffix_ctrl={row['suffix_ctrl']}\n")
+            sys.exit("Error parsing the contrast, make sure the treatment and control specificed in line 2 are in the table (starting at line 5)")
 
-                        A_tr_bio_reps = row["Lib_A_tr_bio_reps"].split(",")
-                        A_bio_tr_fqs = ""
-                        for rep in A_tr_bio_reps:
-                            A_bio_tr_fqs = A_bio_tr_fqs + "${Lib_A_dir}${prefix}" + f"{rep}" + "${suffix_tr},"
+        #associate files with treatment and control
+        tr_file_list = []
+        ctrl_file_list = []
+        for file in filepath_list:
+            flag_tr = file.find(tr)
+            flag_ctrl = file.find(ctrl)
+            if flag_tr == -1 and flag_ctrl == -1:
+                sys.exit(f"ERROR: neither {tr} or {ctrl} is in filename: {file}")
+            if flag_tr != -1 and flag_ctrl != -1:
+                sys.exit(f"ERROR: Both {tr} and {ctrl} is in filename: {file}")
+            if flag_tr != -1:
+                tr_file_list.append(file)
+            else:
+                ctrl_file_list.append(file)
 
-                        A_ctrl_bio_reps = row["Lib_A_ctrl_bio_reps"].split(",")
-                        A_bio_ctrl_fqs = ""
-                        for rep in A_ctrl_bio_reps:
-                            A_bio_ctrl_fqs = A_bio_ctrl_fqs + "${Lib_A_dir}${prefix}" + f"{rep}" + "${suffix_ctrl},"
+        #Parse and check library
+        lib_col = list(df_info.iloc[4:,6])
+        for lib in lib_col: #check if invalid entry
+            if not lib in ["Full", "splitA", "splitB"]:
+                sys.exit(f"Error: library {lib} is not one of: Full, splitA, splitB (caps sensitive)")
+        if "Full" in lib_col and ("splitA" in lib_col or "splitB" in lib_col):  #check if full and split coexists
+            sys.exit(f"Error: Can't decide if using Full or split libraries")
+        if ("splitA" in lib_col and not "splitB" in lib_col) or ( not "splitA" in lib_col and "splitB" in lib_col):
+            sys.exit(f"Error: Can't have only splitA or splitB, please use Full instead")
+        #fqs
+        tr_fqs = ",".join(tr_file_list)
+        ctrl_fqs = ",".join(ctrl_file_list)
+        #library file
+        library_path_input = df_paths.iloc[0,0].split(";")
+        library_path_input = [i for i in library_path_input if i] # remove empty items
+        if "Full" in lib_col:
+            if len(library_path_input)>=2:
+                sys.exit("ERROR: Full library specified, but you entered two file paths for the library reference")
+            lib_ref_file = library_path_input[0]
+        else:
+            if len(library_path_input)==1:
+                sys.exit("ERROR: Split library specified, but you entered one file paths for the library reference")
+            lib_ref_file = f"{library_path_input[0]},{library_path_input[1]}"
 
-                        A_bio_tr_fqs = A_bio_tr_fqs.rstrip(",")
-                        A_bio_ctrl_fqs = A_bio_ctrl_fqs.rstrip(",")
+        #etc metadata
+        Lastname1=df_info.iloc[4,0]
+        Lastname2=df_info.iloc[4,1]
+        VirusInfo=df_info.iloc[4,2]
+        Host=df_info.iloc[4,3]
+        Library=df_info.iloc[4,5]
+        reps=df_info.iloc[1,1].replace(';','-')
 
-                        if not pd.isnull(row["Lib_B_dir"]): #use libA and libB
-                            B_tr_bio_reps = row["Lib_B_tr_bio_reps"].split(",")
-                            B_bio_tr_fqs = ""
-                            for rep in B_tr_bio_reps:
-                                B_bio_tr_fqs = B_bio_tr_fqs + "${Lib_B_dir}${prefix}" + f"{rep}" + "${suffix_tr},"
+        analysis_name = f"{Lastname1}_{Lastname2}_{VirusInfo}_{Host}_{Library}_{reps}_{tr}_vs_{ctrl}"
+        print(f"Analysis name is {bcolors.OKCYAN}{analysis_name}{bcolors.ENDC} ")
 
-                            B_ctrl_bio_reps = row["Lib_B_ctrl_bio_reps"].split(",")
-                            B_bio_ctrl_fqs = ""
-                            for rep in B_ctrl_bio_reps:
-                                B_bio_ctrl_fqs = B_bio_ctrl_fqs + "${Lib_B_dir}${prefix}" + f"{rep}" + "${suffix_ctrl},"
+        #####################
+        #generate nf command#
+        #####################
 
-                            B_bio_tr_fqs = B_bio_tr_fqs.rstrip(",")
-                            B_bio_ctrl_fqs = B_bio_ctrl_fqs.rstrip(",")
+        if red_flag == True:
+            print(f"failed file check and/or metadata parsing, please fix issues and rerun this script")
+        else:
+            print(f"passed file check and successfully parsed metadata, generating Nextflow commands...")
+            wfh.write(f"###############\n")
+            wfh.write(f"#Analysis name: {analysis_name}\n")
+            wfh.write(f"###############\n")
 
-                            # wfh.write("declare -a Lib_B=(")
-                            # reps = row["Lib_B_bio_reps"].split(",")
-                            # reps = " ".join(['"' + item + '"' for item in reps])
-                            # wfh.write(f"{reps})\n")
+            wfh.write(
+                '\n./nextflow run main.nf --treatment_fastq '
+                f"{tr_fqs}"
+                ' \\\n'
+                '--control_fastq '
+                f"{ctrl_fqs}"
+                ' \\\n'
+                f"--library {lib_ref_file}"
+                ' \\\n'
+                f"--output mageck_out --output_prefix {analysis_name} -profile testing\n")
 
-                            # wfh.write(
-                            #     '\n# extract and concat libA rep fastq files\n'
-                            #     'rm "${Lib_A_dir}${prefix}A${suffix_tr}.fq"\n'
-                            #     'for str in ${Lib_A[@]}; do\n'
-                            #     '    gunzip -c "${Lib_A_dir}${prefix}${str}${suffix_tr}" >> "${Lib_A_dir}${prefix}A${suffix_tr}.fq"\n'
-                            #     'done\n'
-                            #     'gzip -c "${Lib_A_dir}${prefix}A${suffix_tr}.fq" > "${Lib_A_dir}${prefix}A${suffix_tr}"\n'
-                            #     'rm "${Lib_A_dir}${prefix}A${suffix_tr}.fq"\n'
-                            # )
-                            # wfh.write(
-                            #     '\n# extract and concat rep libB fastq files\n'
-                            #     'rm "${Lib_B_dir}${prefix}B${suffix_tr}.fq"\n'
-                            #     'for str in ${Lib_B[@]}; do\n'
-                            #     '    gunzip -c "${Lib_B_dir}${prefix}${str}${suffix_tr}" >> "${Lib_B_dir}${prefix}B${suffix_tr}.fq"\n'
-                            #     'done\n'
-                            #     'gzip -c "${Lib_B_dir}${prefix}B${suffix_tr}.fq" > "${Lib_B_dir}${prefix}B${suffix_tr}"\n'
-                            #     'rm "${Lib_B_dir}${prefix}B${suffix_tr}.fq"\n'
-                            # )
-                            tr_fasqs = ""
-                            #for i in
+        wfh.close()
+        print(f"wrote nf commands to file: {xlsx}.sh")
+        print(f"moving {xlsx}.sh from metadata folder to the parent folder")
+        #move sh file to the parent folder
+        csv_filename = os.path.basename(f"{xlsx}.sh")
+        if os.path.isfile(csv_filename):
+            os.remove(csv_filename)
+        os.rename(f"{xlsx}.sh",f"{csv_filename}")
 
-                            wfh.write(
-                                '\n./nextflow run main.nf --treatment_fastq '
-                                f"{A_bio_tr_fqs},{B_bio_tr_fqs}"
-                                ' \\\n'
-                                '--control_fastq '
-                                f"{A_bio_ctrl_fqs},{B_bio_ctrl_fqs}"
-                                ' \\\n'
-                                '--library ${Lib_A_dir}${Lib_A_csv},${Lib_B_dir}${Lib_B_csv} \\\n'
-                                '--output mageck_out --output_prefix ${prefix} -profile testing\n'
-                            )
-
-                        else:
-                            # wfh.write(
-                            #     '\n# extract and concat rep fastq files\n'
-                            #     'rm "${Lib_A_dir}${prefix}A${suffix_tr}.fq"\n'
-                            #     'for str in ${Lib_A[@]}; do\n'
-                            #     '    gunzip -c "${Lib_A_dir}${prefix}${str}${suffix_tr}" >> "${Lib_A_dir}${prefix}all${suffix_tr}.fq"\n'
-                            #     'done\n'
-                            #     'gzip -c "${Lib_A_dir}${prefix}all${suffix_tr}.fq" > "${Lib_A_dir}${prefix}all${suffix_tr}"\n'
-                            #     'rm "${Lib_A_dir}${prefix}A${suffix_tr}.fq"\n'
-                            # )
-                            wfh.write(
-                                '\n./nextflow run main.nf --treatment_fastq '
-                                f"{A_bio_tr_fqs}"
-                                ' \\\n'
-                                '--control_fastq '
-                                f"{A_bio_ctrl_fqs}"
-                                ' \\\n'
-                                '--library ${Lib_A_dir}${Lib_A_csv} \\\n'
-                                '--output mageck_out --output_prefix ${prefix} -profile testing\n'
-                            )
-            print(f"wrote nf commands to file: {csv}.sh")
-            print(f"moving {csv}.sh from metadata folder to the parent folder")
-            csv_filename = os.path.basename(f"{csv}.sh")
-
-
-            os.rename(f"{csv}.sh",f"{csv_filename}")
-
-
+        print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
 
     except Exception as e:
         print("Unexpected error:", str(sys.exc_info()))
         print("additional information:", e)
         PrintException()
-
 
 ##########################
 ## function definitions ##
@@ -246,6 +201,5 @@ def PrintException():
     linecache.checkcache(filename)
     line = linecache.getline(filename, lineno, f.f_globals)
     print('EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj))
-
 
 if __name__ == "__main__": main()
