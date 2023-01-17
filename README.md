@@ -34,7 +34,7 @@ bash helper_scripts/pull_docker_imgs.sh
 ```
 Make the nextflow command executable
 ```
-chmod a+x nextflow
+chmod a+x ./nextflow
 ```  
   
 ### Process your fastq.gz files 
