@@ -3,7 +3,7 @@
 ### modified based on https://github.com/FredHutch/crispr-screen-nf
 
 ## System requirements
-Linux or MacOS
+Linux, MacOS, Windows(WSL)
 
 ## Dependencies
 - [Docker](https://docs.docker.com/get-docker/)
