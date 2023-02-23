@@ -212,12 +212,12 @@ def merge_files_and_rename(old_file_list, new_file):
     if os.path.exists(new_file):
         os.remove(new_file)
 
-    with gzip.open(new_file, 'wb') as outfile:
+    with gzip.open(new_file, mode = 'wb', compresslevel = 6) as outfile:
         # Loop through each file in the file list
         for file_name in old_file_list:
             print(f"    {file_name}")
             # Open the gzipped file for reading in binary mode
-            with gzip.open(os.path.join(file_name), 'rb') as infile:
+            with gzip.open(os.path.join(file_name), mode = 'rb', compresslevel = 6) as infile:
                 # Read the contents of the file
                 file_contents = infile.read()
                 # Check if the last character of the file is a newline
