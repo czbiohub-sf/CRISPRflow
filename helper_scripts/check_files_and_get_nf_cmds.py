@@ -4,6 +4,7 @@ import sys
 import linecache
 import pandas as pd
 import os
+import gzip
 
 class MyParser(argparse.ArgumentParser):
     def error(self, message):
@@ -41,7 +42,7 @@ class bcolors:
 #####################
 def main():
     try:
-        print("Begin checking files")
+        print("Begin processing the fastq.gz files")
         red_flag = False
 
         #check input file path
@@ -71,15 +72,18 @@ def main():
         filepath_list = []
         for index, row in df_paths.iterrows():
             if index >= 3:
+                files_from_sequencer = row.iloc[1]
                 filepath = row.iloc[0]
+                merge_files_and_rename(old_file_list = files_from_sequencer, new_file = filepath)
+
                 filepath_list.append(filepath)
                 if not os.path.isfile(filepath):
-                    print(f"  {filepath} {bcolors.FAIL}not found{bcolors.ENDC}")
+                    print(f"    {bcolors.WARNING}{filepath}{bcolors.ENDC} {bcolors.FAIL}not found{bcolors.ENDC}")
                     red_flag = True
                 else:
-                    print(f"  {filepath} {bcolors.OKGREEN}OK{bcolors.ENDC}")
+                    print(f"    {bcolors.WARNING}{filepath}{bcolors.ENDC} {bcolors.OKGREEN}OK{bcolors.ENDC}")
 
-        print("Done checking files")
+        print("Done copying, merging and renaming files")
 
         ################
         #parse metadata#
@@ -154,6 +158,7 @@ def main():
         #####################
         #generate nf command#
         #####################
+        res_prefix = f"{VirusInfo}_{reps}_{tr}_vs_{ctrl}"
 
         if red_flag == True:
             print(f"failed file check and/or metadata parsing, please fix issues and rerun this script")
@@ -172,7 +177,7 @@ def main():
                 ' \\\n'
                 f"--library {lib_ref_file}"
                 ' \\\n'
-                f"--output mageck_out --output_prefix {analysis_name} -profile testing\n")
+                f"--output mageck_out/{analysis_name} --output_prefix {res_prefix} -profile testing\n")
 
         wfh.close()
         print(f"wrote nf commands to file: {xlsx}.sh")
@@ -193,6 +198,36 @@ def main():
 ##########################
 ## function definitions ##
 ##########################
+def merge_files_and_rename(old_file_list, new_file):
+
+    print(f"Merging:")
+
+    old_file_list = old_file_list.split(',')
+
+    # Create the output directory if it doesn't exist
+    out_dir = os.path.dirname(new_file)
+    os.makedirs(out_dir, exist_ok=True)
+
+    # Remove output file if it already exists
+    if os.path.exists(new_file):
+        os.remove(new_file)
+
+    with gzip.open(new_file, 'wb') as outfile:
+        # Loop through each file in the file list
+        for file_name in old_file_list:
+            print(f"    {file_name}")
+            # Open the gzipped file for reading in binary mode
+            with gzip.open(os.path.join(file_name), 'rb') as infile:
+                # Read the contents of the file
+                file_contents = infile.read()
+                # Check if the last character of the file is a newline
+                if file_contents[-1:] != b'\n':
+                    # Append a newline character to the end of the file
+                    file_contents += b'\n'
+                # Write the contents of the file to the output file
+                outfile.write(file_contents)
+    print(f"    into a {bcolors.WARNING}new file{bcolors.ENDC}:")
+
 def PrintException():
     exc_type, exc_obj, tb = sys.exc_info()
     f = tb.tb_frame
