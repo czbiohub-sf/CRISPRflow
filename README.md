@@ -45,7 +45,7 @@ python helper_scripts/check_files_and_get_nf_cmds.py --xlsx metadata/Naming_conv
 ```
 You should see the following output:  
 
-![image](https://user-images.githubusercontent.com/4129442/221059262-d94826e8-25cf-4693-9def-9d165c8a40e6.png)
+![image](https://user-images.githubusercontent.com/4129442/221060263-ddda651b-5b3c-4485-964c-93d757ae470b.png)
   
 Start nextflow  
 ```
