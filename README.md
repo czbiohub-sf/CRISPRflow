@@ -53,7 +53,7 @@ bash Naming_convention_example.xlsx.sh
 ```
 You should see the following output:  
 
-![image](https://user-images.githubusercontent.com/4129442/213024291-3322c1b3-a8cf-4a02-bbce-5b286aa5124f.png)
+![image](https://user-images.githubusercontent.com/4129442/221059147-7ad13fc6-c47a-452f-b1eb-e80f398759d2.png)
 
 
 ## Input
