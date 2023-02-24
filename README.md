@@ -45,7 +45,7 @@ python helper_scripts/check_files_and_get_nf_cmds.py --xlsx metadata/Naming_conv
 ```
 You should see the following output:  
 
-![image](https://user-images.githubusercontent.com/4129442/220806990-efa0f963-9566-4960-8090-9070e21e5d83.png)
+![image](https://user-images.githubusercontent.com/4129442/221059262-d94826e8-25cf-4693-9def-9d165c8a40e6.png)
   
 Start nextflow  
 ```
@@ -53,7 +53,7 @@ bash Naming_convention_example.xlsx.sh
 ```
 You should see the following output:  
 
-![image](https://user-images.githubusercontent.com/4129442/213024291-3322c1b3-a8cf-4a02-bbce-5b286aa5124f.png)
+![image](https://user-images.githubusercontent.com/4129442/221059256-3e5600ce-0b32-46ba-a6e4-39bfbbc79e3b.png)
 
 
 ## Input
