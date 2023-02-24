@@ -5,6 +5,9 @@ import linecache
 import pandas as pd
 import os
 import gzip
+import time
+import datetime
+import shutil
 
 class MyParser(argparse.ArgumentParser):
     def error(self, message):
@@ -42,6 +45,7 @@ class bcolors:
 #####################
 def main():
     try:
+        starttime = datetime.datetime.now()
         print("Begin processing the fastq.gz files")
         red_flag = False
 
@@ -74,14 +78,17 @@ def main():
             if index >= 3:
                 files_from_sequencer = row.iloc[1]
                 filepath = row.iloc[0]
-                merge_files_and_rename(old_file_list = files_from_sequencer, new_file = filepath)
+                merge_files_and_rename2(old_file_list = files_from_sequencer, new_file = filepath)
+
+                elapsed = cal_elapsed_time(starttime, datetime.datetime.now())
+                starttime = datetime.datetime.now()
 
                 filepath_list.append(filepath)
                 if not os.path.isfile(filepath):
                     print(f"    {bcolors.WARNING}{filepath}{bcolors.ENDC} {bcolors.FAIL}not found{bcolors.ENDC}")
                     red_flag = True
                 else:
-                    print(f"    {bcolors.WARNING}{filepath}{bcolors.ENDC} {bcolors.OKGREEN}OK{bcolors.ENDC}")
+                    print(f"    {bcolors.WARNING}{filepath}{bcolors.ENDC}\n    {bcolors.OKGREEN}OK{bcolors.ENDC}, took {elapsed[0]:.2f} min ({elapsed[1]} sec)")
 
         print("Done copying, merging and renaming files")
 
@@ -200,7 +207,7 @@ def main():
 ##########################
 def merge_files_and_rename(old_file_list, new_file):
 
-    print(f"Merging:")
+    print(f"Copying/merging:")
 
     old_file_list = old_file_list.split(',')
 
@@ -228,6 +235,46 @@ def merge_files_and_rename(old_file_list, new_file):
                 outfile.write(file_contents)
     print(f"    into a {bcolors.WARNING}new file{bcolors.ENDC}:")
 
+
+def merge_files_and_rename2(old_file_list, new_file):
+    '''
+    faster implementation, avoid reading the whole file into memory
+    '''
+
+    print(f"Copying/merging:")
+
+    old_file_list = old_file_list.split(',')
+
+    # Create the output directory if it doesn't exist
+    out_dir = os.path.dirname(new_file)
+    os.makedirs(out_dir, exist_ok=True)
+
+    # Remove output file if it already exists
+    if os.path.exists(new_file):
+        os.remove(new_file)
+
+    if len(old_file_list) == 1:
+        # rename
+        print(f"    {old_file_list[0]}")
+        shutil.copyfile(old_file_list[0], new_file)
+    else:
+        #concatenate
+        with gzip.open(new_file, mode = 'wb', compresslevel = 6) as outfile:
+            # Loop through each file in the file list
+            for file_name in old_file_list:
+                print(f"    {file_name}")
+                # Open the gzipped file for reading in binary mode
+                with gzip.open(os.path.join(file_name), mode = 'rb', compresslevel = 6) as infile:
+                    #copy
+                    infile.seek(0)
+                    shutil.copyfileobj(infile, outfile,64*1024*1024)
+                    #check if file ends with a newline
+                    infile.seek(0)
+                    if infile.seek(-1, 2) != b'\n':
+                        outfile.write(b'\n')
+
+    print(f"    into a {bcolors.WARNING}new file{bcolors.ENDC}:")
+
 def PrintException():
     exc_type, exc_obj, tb = sys.exc_info()
     f = tb.tb_frame
@@ -236,5 +283,13 @@ def PrintException():
     linecache.checkcache(filename)
     line = linecache.getline(filename, lineno, f.f_globals)
     print('EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj))
+
+def cal_elapsed_time(starttime, endtime):
+    """
+    output: [elapsed_min,elapsed_sec]
+    """
+    elapsed_sec = endtime - starttime
+    elapsed_min = elapsed_sec.seconds / 60
+    return [elapsed_min, elapsed_sec]
 
 if __name__ == "__main__": main()
