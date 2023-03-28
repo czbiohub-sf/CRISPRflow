@@ -21,7 +21,6 @@ git clone https://github.com/czbiohub/CRISPRflow.git
 Go the repository directory, switch the branch if running branch other than master
 ```
 cd CRISPRflow
-git checkout <branch you'd like to run>
 ```
 Create conda environment and activate it
 ```
