@@ -38,6 +38,7 @@ chmod a+x ./nextflow
   
 ### Process your fastq.gz files 
 Start the Docker program.
+  
 Check fastq files and create nextflow commands
 ```
 conda activate CRISPRflow
