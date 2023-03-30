@@ -11,7 +11,6 @@ Linux, MacOS, Windows(WSL)
 - [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-Start the Docker program
 ## Usage: 
 
 ### One-time preparation work
@@ -38,6 +37,7 @@ chmod a+x ./nextflow
 ```  
   
 ### Process your fastq.gz files 
+Start the Docker program.
 Check fastq files and create nextflow commands
 ```
 conda activate CRISPRflow
