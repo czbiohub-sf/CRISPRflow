@@ -67,9 +67,14 @@ You should see the following output:
 For file format, see MAGeCK manual: https://sourceforge.net/p/mageck/wiki/Home/  
 
 ## Troubleshooting
-Java issues (after installing java):  
+- Java issues (after installing java):  
 For most case, it can be fixed by explicitly specifying the version installed (v17 in the example)
 ```
 unset JAVA_HOME
 export JAVA_HOME=`/usr/libexec/java_home -v 17`
 ```
+- Error "executing process ... The command 'docker' could not be found ..."  
+You'll need to start the docker program on your computer
+
+- Error "Both treatment and control are in the file name", but it's not the case  
+Captalize the first letter of your treatment names, for example: `Infected`, `Uninfected`
