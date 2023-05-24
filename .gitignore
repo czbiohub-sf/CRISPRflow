@@ -4,4 +4,8 @@
 /.nextflow
 /work
 /fastq/downsize_fastqgz.py
-Naming_convention_example.xlsx.sh
+/*.sh
+/metadata/*
+/mageck_out
+/fastq/from_SRA
+/fastq/check_unmapped_reads.py

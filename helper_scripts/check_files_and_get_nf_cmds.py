@@ -157,7 +157,7 @@ def main():
         VirusInfo=df_info.iloc[4,2]
         Host=df_info.iloc[4,3]
         Library=df_info.iloc[4,5]
-        reps=df_info.iloc[1,1].replace(';','-')
+        reps=str(df_info.iloc[1,1]).replace(';','-')
 
         analysis_name = f"{Lastname1}_{Lastname2}_{VirusInfo}_{Host}_{Library}_{reps}_{tr}_vs_{ctrl}"
         print(f"Analysis name is {bcolors.OKCYAN}{analysis_name}{bcolors.ENDC} ")
