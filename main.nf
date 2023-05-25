@@ -154,8 +154,8 @@ workflow {
     Channel
         .fromPath(params.library.split(",").toList())
         .branch{
-           sublib_A: it =~ /.*_A_.*/
-           sublib_B: it =~ /.*_B_.*/
+           sublib_A: it =~ /.*_splitA_.*/
+           sublib_B: it =~ /.*_splitB_.*/
            all: true
         }
         .set{sgrna_library}
@@ -165,8 +165,8 @@ workflow {
     Channel
         .fromPath(params.treatment_fastq.split(",").toList())
         .branch{
-           sublib_A: it =~ /.*_A_.*/
-           sublib_B: it =~ /.*_B_.*/
+           sublib_A: it =~ /.*_splitA_.*/
+           sublib_B: it =~ /.*_splitB_.*/
            all: true
         }
         .set{treatment_reads_ch}
@@ -178,8 +178,8 @@ workflow {
     Channel
         .fromPath(params.control_fastq.split(",").toList())
         .branch{
-           sublib_A: it =~ /.*_A_.*/
-           sublib_B: it =~ /.*_B_.*/
+           sublib_A: it =~ /.*_splitA_.*/
+           sublib_B: it =~ /.*_splitB_.*/
            all: true
 
         }
@@ -189,8 +189,8 @@ workflow {
     Channel
         .of()
         .branch{
-           sublib_A: it =~ /.*_A_.*/
-           sublib_B: it =~ /.*_B_.*/
+           sublib_A: it =~ /.*_splitA_.*/
+           sublib_B: it =~ /.*_splitB_.*/
            all: true
         }
         .set{count_done_ch}
@@ -208,8 +208,8 @@ workflow {
     sgrna_library.sublib_B.view()
     sgrna_library.all.view()
 
-    library_A_flag = (params.treatment_fastq ==~ /.*_A_.*/ & params.control_fastq ==~ /.*_A_.*/ & params.library ==~ /.*_A_.*/)
-    library_B_flag = (params.treatment_fastq ==~ /.*_B_.*/ & params.control_fastq ==~ /.*_B_.*/ & params.library ==~ /.*_B_.*/)
+    library_A_flag = (params.treatment_fastq ==~ /.*_splitA_.*/ & params.control_fastq ==~ /.*_splitA_.*/ & params.library ==~ /.*_splitA_.*/)
+    library_B_flag = (params.treatment_fastq ==~ /.*_splitB_.*/ & params.control_fastq ==~ /.*_splitB_.*/ & params.library ==~ /.*_splitB_.*/)
 
     if (!library_A_flag && library_B_flag)
     {
